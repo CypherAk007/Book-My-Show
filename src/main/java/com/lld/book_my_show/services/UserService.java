@@ -3,6 +3,7 @@ package com.lld.book_my_show.services;
 import com.lld.book_my_show.models.User;
 import com.lld.book_my_show.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,7 +26,12 @@ public class UserService {
 
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+
+//        ENCODING PASSWORD WITH PASSWORD ENCODER
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(password));
+//        user.setPassword(password);
+
         return userRepository.save(user);
 
     }
@@ -34,9 +40,15 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(()->new RuntimeException("No User Found!!"));
 
-        if(user.getPassword().equals(password)){
+
+//IF PASSWORD MATCHES THEN RETURN THE PASSWORD
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if(passwordEncoder.matches(password, user.getPassword())){
             return user;
         }
+//        if(user.getPassword().equals(password)){
+//            return user;
+//        }
         throw new RuntimeException("Invalid Credentials!!");
     }
 

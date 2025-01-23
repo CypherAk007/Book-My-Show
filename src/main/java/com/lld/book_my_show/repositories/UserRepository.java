@@ -6,7 +6,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
+//https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html
+//https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
@@ -15,5 +16,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 //    if we want to pass multiple parameters
 //    Optional<User> findByIdAndEmail(@Param("email") String email,@Param("id") Long id);
+
+    //    if we want to find by email and password
+//    Optional<User> findByEmailAndEmail(String email,String password);
 
 }

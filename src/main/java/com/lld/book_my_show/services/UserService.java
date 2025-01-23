@@ -30,6 +30,16 @@ public class UserService {
 
     }
 
+    public User login(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()->new RuntimeException("No User Found!!"));
+
+        if(user.getPassword().equals(password)){
+            return user;
+        }
+        throw new RuntimeException("Invalid Credentials!!");
+    }
+
 //    STEPS ->
 //    1. Check if user already exits
 //            a. Fetch the user details by email

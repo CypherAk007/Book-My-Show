@@ -20,7 +20,7 @@ public class PriceCalculatorService {
     }
 
     public double calculate(MovieShow movieShow, List<ShowSeat> savedShowSeats) {
-        List<ShowSeatType> showSeatTypes = showSeatTypeRepository.findAllbyMovieShow(movieShow);
+        List<ShowSeatType> showSeatTypes = showSeatTypeRepository.findByMovieShow(movieShow);
         double amount = 0;
         for(ShowSeat showSeat: savedShowSeats ){
             for(ShowSeatType showSeatType:showSeatTypes){
